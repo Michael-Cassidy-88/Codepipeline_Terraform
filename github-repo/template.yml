@@ -1,0 +1,22 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+
+Globals:
+  Function:
+    Runtime: nodejs16.x
+    Tracing: Active
+    Environment:
+      Variables:
+        region: "us-east-1"
+
+Resources:
+  ImageMagick:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./
+      Handler: index.handler
+      FunctionName: "Repo_Name"
+      Description: Description
+      MemorySize: 512
+      Timeout: 30
+      Role: arn:aws:iam::xxxxxxxxxxxx:role/Repo-Name-Role

@@ -1,0 +1,42 @@
+version: 0.2
+
+env:
+
+    shell: bash
+
+phases:
+
+    install:
+
+        runtime-versions:
+
+            nodejs: 16
+
+        commands:
+
+            - npm install -g typescript
+
+            - pip install --upgrade pip
+
+    build:
+
+        commands:
+
+            - echo deploy started on `date`
+
+            - npm install
+
+            - "find ./node_modules/* -mtime +10950 -exec touch {} \\;"
+
+            - export BUCKET=mys-sam-packages
+
+            - aws cloudformation package --template-file template.yml --s3-bucket $BUCKET --output-template-file outputtemplate.yml --debug
+
+artifacts:
+
+
+    files:
+
+        - template.yml
+
+        - outputtemplate.yml

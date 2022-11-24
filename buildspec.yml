@@ -24,11 +24,7 @@ phases:
 
             - echo deploy started on `date`
 
-            - npm install
-
-            - "find ./node_modules/* -mtime +10950 -exec touch {} \\;"
-
-            - export BUCKET=mys-sam-packages
+            - export BUCKET=codepipeline-us-east-1-xxxxxxxxxxxxxx  #or use a different bucket other than your codepipeline bucket
 
             - aws cloudformation package --template-file template.yml --s3-bucket $BUCKET --output-template-file outputtemplate.yml --debug
 

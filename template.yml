@@ -10,7 +10,7 @@ Globals:
         region: "us-east-1"
 
 Resources:
-  ImageMagick:
+  LambdaExample:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: ./
@@ -19,4 +19,4 @@ Resources:
       Description: Description
       MemorySize: 512
       Timeout: 30
-      Role: arn:aws:iam::xxxxxxxxxxxx:role/Repo-Name-Role
+      Role: arn:aws:iam::xxxxxxxxxxxx:role/CodePipelineRole #a more limiting role may be appropriate

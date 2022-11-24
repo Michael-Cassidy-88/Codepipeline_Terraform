@@ -50,7 +50,7 @@ resource "aws_kms_key" "codebuild" {
                     ]
                     Condition = {
                         StringEquals = {
-                            "kms:CallerAccount" = "xxxxxxxxxxxx"
+                            "kms:CallerAccount" = ["${data.aws_caller_identity.default.account_id}"]
                             "kms:ViaService"    = "s3.us-east-1.amazonaws.com"
                         }
                     }
@@ -67,7 +67,7 @@ resource "aws_kms_key" "codebuild" {
                     ]
                     Effect    = "Allow"
                     Principal = {
-                        AWS = ["arn:aws:iam::xxxxxxxxxxxx:root"]
+                        AWS = ["arn:aws:iam::${data.aws_caller_identity.default.account_id}:root"]
                     }
                     Resource  = "*"
                     Sid       = "Allow direct access to key metadata to the account"
@@ -175,3 +175,5 @@ resource "aws_kms_alias" "codebuild" {
     name           = "alias/key"
     target_key_id  = aws_kms_key.codebuild.key_id
 }
+
+data "aws_caller_identity" "default" {}

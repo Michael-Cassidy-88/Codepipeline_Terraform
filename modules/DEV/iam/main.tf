@@ -9,7 +9,7 @@ data "aws_iam_policy_document" "cp_assume_role_policy" {
 
     principals {
       type        = "Service"
-      identifiers = ["codepipeline.amazonaws.com", "codebuild.amazonaws.com", "cloudformation.amazonaws.com"]
+      identifiers = ["codepipeline.amazonaws.com", "codebuild.amazonaws.com", "cloudformation.amazonaws.com", "lambda.amazonaws.com"]
     }
   }
 
@@ -49,11 +49,14 @@ resource "aws_iam_role_policy" "codepipelinerole_policy" {
         },
         {
             "Action": [
-                "s3:PutObject"
+                "s3:PutObject",
+                "s3:GetObject",
+                "s3:DeleteObject"
+
             ],
             "Resource": [
-                "arn:aws:s3:::codepipeline*",
-                "arn:aws:s3:::elasticbeanstalk*"
+                "arn:aws:s3:::*",
+                "arn:aws:s3:::*/*"
             ],
             "Effect": "Allow"
         },
@@ -99,8 +102,7 @@ resource "aws_iam_role_policy" "codepipelinerole_policy" {
         },
         {
             "Action": [
-                "lambda:InvokeFunction",
-                "lambda:ListFunctions"
+                "lambda:*"
             ],
             "Resource": "*",
             "Effect": "Allow"
